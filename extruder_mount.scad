@@ -2,9 +2,8 @@ include <mount.scad>
 include <notch.scad>
 
 
-$fn=500;
+$fn=100;
 
-//translate([16.5, 6.5, -23.5]) rotate([0, 270, 0]) import(file = "sprite extruder.stl");
 module skrew() {
     cylinder(h = 10, r = 3);
     translate([0, 0, -10]) cylinder(h = 10, r = 1.75);
@@ -43,6 +42,6 @@ difference() {
         translate([0, 0, 2]) skrew();
     }
     translate([20.55,24.8,2]) cube([4, 4, 7]);
-    #translate([-1, 8.10, 5]) cube([4, 20, 4]);
+    translate([-1, 8.10, 5]) cube([4, 20, 4]);
 }
 
