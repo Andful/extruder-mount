@@ -3,10 +3,21 @@ $fn = 100;
 
 function s(i) = i/$fn;
 function r(i, min_radius, max_radius) = min_radius + (max_radius - min_radius) * s(i);
+function knob_projection(min_radius, max_radius) = [
+    for (i = [0 : 1 : $fn]) 
+    [
+        r(i, min_radius, max_radius) * cos(360*s(i)),
+        r(i, min_radius, max_radius) * sin(360*s(i))
+    ]
+];
+/*difference() {
+    linear_extrude(2, scale=1.05) polygon(knob_projection(4, 12));
+    cylinder(h = 2, r = 3.25);
+}*/
 
 function flatten(l) = [ for (a = l) for (b = a) b ] ;
 
-function knob_projection(height, min_radius, max_radius, delta, hole) = flatten([
+function knob_points(height, min_radius, max_radius, delta, hole) = flatten([
     for (i = [0 : 1 : $fn]) 
     [
         [
@@ -32,7 +43,7 @@ function knob_projection(height, min_radius, max_radius, delta, hole) = flatten(
     ]
 ]);
 
-function knob_projection_indices() = concat(flatten([
+function knob_indices() = concat(flatten([
     for (i = [0 : 1 : $fn - 1]) 
     [
         //Inside face
@@ -67,7 +78,7 @@ function knob_projection_indices() = concat(flatten([
 ]),[[2,4*$fn + 2,3], [3,4*$fn + 2,4*$fn + 3]]);
 
 polyhedron(
-    points = knob_projection(3.75, 4, 12, 1, 3.25),
-    faces = knob_projection_indices(),
-    convexity=2
+    points = knob_points(3.75, 4, 12, 1, 3.25),
+    faces = knob_indices(),
+    convexity=3
 );
