@@ -1,84 +1,18 @@
+include <util/knob.scad>
+include <global.scad>
 
 $fn = 100;
+height = 2;
 
-function s(i) = i/$fn;
-function r(i, min_radius, max_radius) = min_radius + (max_radius - min_radius) * s(i);
-function knob_projection(min_radius, max_radius) = [
-    for (i = [0 : 1 : $fn]) 
-    [
-        r(i, min_radius, max_radius) * cos(360*s(i)),
-        r(i, min_radius, max_radius) * sin(360*s(i))
-    ]
-];
-/*difference() {
-    linear_extrude(2, scale=1.05) polygon(knob_projection(4, 12));
-    cylinder(h = 2, r = 3.25);
-}*/
+translate([0, 0, height]) 
+scale([1, 1, -1])
+    knob(
+        height=height,
+        min_radius=5,
+        max_radius=10,
+        hole=3,
+        slope=slope,
+        dead_angle=120
+    );
 
-function flatten(l) = [ for (a = l) for (b = a) b ] ;
-
-function knob_points(height, min_radius, max_radius, delta, hole) = flatten([
-    for (i = [0 : 1 : $fn]) 
-    [
-        [
-            hole * cos(360*s(i)),
-            hole * sin(360*s(i)),
-            0
-        ],
-        [
-            hole * cos(360*s(i)),
-            hole * sin(360*s(i)),
-            height
-        ],
-        [
-            r(i, min_radius, max_radius) * cos(360*s(i)),
-            r(i, min_radius, max_radius) * sin(360*s(i)),
-            0
-        ],
-        [
-            r(i, min_radius + delta, max_radius + delta) * cos(360*s(i)),
-            r(i, min_radius + delta, max_radius + delta) * sin(360*s(i)),
-            height
-        ],
-    ]
-]);
-
-function knob_indices() = concat(flatten([
-    for (i = [0 : 1 : $fn - 1]) 
-    [
-        //Inside face
-        [
-            4*i, 4*i + 4, 4*i + 1
-        ],
-        [
-            4*i + 1, 4*i + 4, 4*i + 5
-        ],
-        //Bottom face
-        [
-            4*i, 4*i + 2, 4*i + 4
-        ],
-        [
-            4*i + 2, 4*i + 6 , 4*i + 4
-        ],
-        //Top face
-        [
-            4*i + 1, 4*i + 5, 4*i + 3
-        ],
-        [
-            4*i + 3, 4*i + 5, 4*i + 7
-        ],
-        //Outside face
-        [
-            4*i + 2, 4*i + 3, 4*i + 6
-        ],
-        [
-            4*i + 3, 4*i + 7, 4*i + 6
-        ],
-    ]
-]),[[2,4*$fn + 2,3], [3,4*$fn + 2,4*$fn + 3]]);
-
-polyhedron(
-    points = knob_points(3.75, 4, 12, 1, 3.25),
-    faces = knob_indices(),
-    convexity=3
-);
+translate([3, -3, 0]) cube([20, 3, height]);
