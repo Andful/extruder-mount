@@ -1,12 +1,12 @@
-M = [ [ 1  , 0  , -0.5  , 0   ],
-      [ 0  , 1  , 0  , 0   ],  // The "0.7" is the skew value; pushed along the y axis as z changes.
-      [ 0  , 0  , 1  , 0   ],
-      [ 0  , 0  , 0  , 1   ] ] ;
+include <rotate_around.scad>
 
-module notch(male = false, height=4) {
+module notch(base, height, slope) {
+    hypotenuse = sqrt(pow(base/2, 2) + pow(height, 2));
+    angle = atan(base/(2*height));
     intersection() {
-        multmatrix(M) linear_extrude(height) scale([23, 15]) polygon([[0, 0], [1, 0.5], [0, 1]]);
-        if (male) translate([3, 0, 0]) rotate([0, atan(1/3.75), 0]) cube([30, 20, 100]);
+        rotate_around([0, 0, angle], [base/2, 0, 0]) rotate_around([0, -slope, 0], [base/2, 0, 0]) translate([-base/2, 0, 0])  cube([base, hypotenuse, 100]);
+        rotate_around([0, 0, -angle], [-base/2, 0, 0]) rotate_around([0, slope, 0], [-base/2, 0, 0]) translate([-base/2, 0, 0])  cube([base, hypotenuse, 100]);
+        rotate([-slope, 0, 0]) translate([-base/2, 0, 0]) cube([base, height, 100]);
+        translate([-base/2, 0, 0]) cube([base, height, 100]);
     }
 }
-
