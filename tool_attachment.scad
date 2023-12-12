@@ -3,8 +3,9 @@ include <util/holes.scad>
 include <util/notch.scad>
 include <global.scad>
 
-h = 2*(plate_dimensions[0] - hinge_center[0]);
 $fn = 100;
+
+h = 2*(plate_dimensions[0] - hinge_center[0]);
 module tool_attachment() {
     difference() {
         translate([0, 0, 5]) linear_extrude(5) rounded_square([h, plate_dimensions[1]], plate_radius);

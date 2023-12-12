@@ -4,6 +4,8 @@ include <util/holes.scad>
 include <util/notch.scad>
 include <global.scad>
 
+$fn = 100;
+
 module printhead_attachment() {
     difference() {
         union() {
@@ -24,5 +26,6 @@ module printhead_attachment() {
     }
 }
 
+printhead_attachment();
 
 
