@@ -1,0 +1,29 @@
+name: Create the STLs and push them
+on:
+  push:
+    branches: 
+      - master
+      - v2
+  # to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  push-stl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y  --no-install-recommends openscad
+          mkdir stls
+      - name: Create STLs
+        run: |
+          openscad -o stls/knob.stl knob.scad
+          openscad -o stls/printhead_attachment.stl printhead_attachment.scad
+          openscad -o stls/tool_attachment.stl tool_attachment.scad
+      - name: Push STLs
+        uses: actions/upload-artifact@v3
+        with:
+          name: STL files
+          path: stls/*.stl
