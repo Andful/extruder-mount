@@ -81,7 +81,7 @@ module knob(height=3.75, min_radius=4, max_radius=12, slope = 45, hole=3.25, dea
     polyhedron(
         points = knob_points(height, min_radius, max_radius, delta, hole, dead_i),
         faces = knob_indices(),
-        convexity=3
+        convexity=100
     );
 }
 

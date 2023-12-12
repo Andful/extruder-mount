@@ -1,9 +1,8 @@
 name: Create the STLs and push them
 on:
   push:
-    branches: 
+    branches:
       - master
-      - v2
   # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -19,7 +18,7 @@ jobs:
           mkdir stls
       - name: Create STLs
         run: |
-          openscad -o stls/knob.stl knob.scad
+          openscad -o stls/keyknob.stl keyknob.scad
           openscad -o stls/printhead_attachment.stl printhead_attachment.scad
           openscad -o stls/tool_attachment.stl tool_attachment.scad
       - name: Push STLs
