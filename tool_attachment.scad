@@ -18,5 +18,3 @@ module tool_attachment() {
     l = 3;
     translate([h/2, hinge_center[1], l]) cylinder(h = 8 - l, r = hinge_radius);
 }
-
-tool_attachment();

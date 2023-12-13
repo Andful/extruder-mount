@@ -25,7 +25,3 @@ module printhead_attachment() {
         translate([0, 0, 2]) holes() screw();
     }
 }
-
-printhead_attachment();
-
-

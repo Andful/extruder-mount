@@ -20,5 +20,3 @@ module keyknob() {
         translate([hinge_radius + hinge_clearance, -4, 0]) cube([20, 4, height]);
     }
 }
-
-keyknob();
