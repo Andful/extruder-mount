@@ -7,7 +7,7 @@ module tool_attachment() {
   difference() {
     translate([ 0, 0, 5 ]) linear_extrude(5)
         rounded_square(plate_dimensions, plate_radius);
-    translate([ 0, 0, 5 ]) cube([ hinge_center.x, 10, 3 ]);
+    translate([ 0, 0, 5 ]) cube([ plate_dimensions.x, 10, 3 ]);
     intersection() {
       linear_extrude(100) rounded_square(plate_dimensions, plate_radius);
       translate(notch_position) rotate([ 0, 180, 0 ])
