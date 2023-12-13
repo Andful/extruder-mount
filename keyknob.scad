@@ -1,8 +1,6 @@
 include <util/knob.scad>
 include <global.scad>
 
-$fn = 100;
-
 height = 2.5;
 module keyknob() {
     union() {

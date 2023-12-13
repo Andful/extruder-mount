@@ -3,8 +3,6 @@ include <util/holes.scad>
 include <util/notch.scad>
 include <global.scad>
 
-$fn = 100;
-
 h = 2*(plate_dimensions[0] - hinge_center[0]);
 module tool_attachment() {
     difference() {

@@ -18,9 +18,9 @@ jobs:
           mkdir stls
       - name: Create STLs
         run: |
-          openscad -D "keyknob()" -o stls/keyknob.stl keyknob.scad
-          openscad -D "printhead_attachment()" -o stls/printhead_attachment.stl printhead_attachment.scad
-          openscad -D "tool_attachment()" -o stls/tool_attachment.stl tool_attachment.scad
+          openscad -D '$fn=100' -D 'keyknob()' -o stls/keyknob.stl keyknob.scad
+          openscad -D '$fn=100' -D 'printhead_attachment()' -o stls/printhead_attachment.stl printhead_attachment.scad
+          openscad -D '$fn=100' -D 'tool_attachment()' -o stls/tool_attachment.stl tool_attachment.scad
       - name: Push STLs
         uses: actions/upload-artifact@v3
         with:
